@@ -1,0 +1,34 @@
+<header class="ui fixed inverted menu">
+    <div class="ui container">
+        <a href="{{ path("home") }}" class="header item">
+            <img class="logo logoImg" src="{{ absolute_url('/logo.png') }}">
+            BookStore
+        </a>
+        <a href="{{ path("home") }}" class="ui item {{ app.request.get('_route') == 'home'? 'active':'' }}"> Home </a>
+        <a href="{{ path("auteur_index") }}" class="ui item {{ app.request.get('_route') == 'auteur_index'? 'active':'' }}"> Authors </a>
+        <a href="{{ path("livre_index") }}" class="ui item {{ app.request.get('_route') == 'livre_index'? 'active':'' }}"> Books </a>
+
+        <div class="right ui inverted menu">
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path("cp_index") }}" class="ui item right {{ app.request.get('_route') == 'cp_index'? 'active':'' }}"> <i class="icon key"></i> Admin panel </a>
+            {% endif %}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <div class="ui dropdown item">
+                    <i class="user icon"></i> {{ app.user.username }}
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <div class="item">
+                            <a href="{{ path('app_account') }}" style="color: black; padding: 0;" class="item inverted">My account</a>
+                        </div>
+                        <div class="item ">
+                            <a href="{{ path("app_logout") }}" style="color: black; padding: 0;" class="item inverted">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <a href="{{ path("app_login") }}" class="item {{ app.request.get('_route') == 'app_login'? 'active':'' }}">Login</a>
+                <a href="{{ path("app_register") }}" class="item {{ app.request.get('_route') == 'app_register'? 'active':'' }}">Sign-up</a>
+            {% endif %}
+        </div>
+    </div>
+</header>
